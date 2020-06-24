@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Build Apps - IPFS Africa Community</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <!-- styles -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:400italic,400,600,700" rel="stylesheet">
+  <link href="assets/css/bootstrap.css" rel="stylesheet">
+  <link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
+  <link href="assets/css/docs.css" rel="stylesheet">
+  <link href="assets/js/google-code-prettify/prettify.css" rel="stylesheet">
+  <link href="assets/css/style.css" rel="stylesheet">
+  <link href="assets/color/default.css" rel="stylesheet">
+
+  <!-- fav and touch icons -->
+  <link rel="shortcut icon" href="assets/ico/favicon.ico">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/apple-touch-icon-144-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/ico/apple-touch-icon-114-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/ico/apple-touch-icon-72-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" href="assets/ico/apple-touch-icon-57-precomposed.png">
+
+</head>
+
+<body data-spy="scroll" data-target=".bs-docs-sidebar">
+  <header>
+    <!-- Navbar
+    ================================================== -->
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <!-- logo -->
+          <a class="brand logo" href="index.html">
+			<img src="assets/img/logo.png" alt="" />
+			</a>
+          <!-- end logo -->
+          <!-- top menu --><div class="navigation">
+          <div class="navigation">
+            <nav>
+              <ul class="nav topnav">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="get-started.html">Get Started</a></li>
+                <li class="dropdown active"><a href="build-apps.html">Build Apps</a></li>
+                <li><a href="portfolio.html">Ecosystem</a></li>
+                <li><a href="contact.html">Contact</a></li>
+              </ul>
+            </nav>
+          </div>
+          <!-- end menu -->
+        </div>
+      </div>
+    </div>
+  </header>
+  <!-- Subhead
+================================================== -->
+  <section id="subintro">
+    <div class="jumbotron subhead" id="overview">
+      <div class="container">
+        <div class="row">
+          <div class="span12">
+            <div class="centered">
+              <h3>Build on IPFS</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div class="container">
+    <!-- Docs nav
+    ================================================== -->
+    <div class="row">
+      <div class="span3 bs-docs-sidebar">
+        <ul class="nav nav-list bs-docs-sidenav">
+          <li><a href="#service"><i class="icon-chevron-right"></i> Build A Service</a></li>
+          <li><a href="#api"><i class="icon-chevron-right"></i> Build with the IPFS API</a></li>
+        </ul>
+      </div>
+      <div class="span9">
+        <!-- What is IPFS?
+        ================================================== -->
+        <section id="service" class="doc">
+          <div class="page-header">
+            <h3>Build A Service</h3>
+          </div>
+          <p>IPFS has a few default services that it runs by default, such as the DHT, Bitswap, and the diagnostics 
+            service. Each of these simply registers a handler on the IPFS PeerHost, and listens on it for new connections. 
+            The <code>corenet</code> package has a very clean interface to this functionality. So let's try building an easy demo 
+            service to try this out!
+          </p>
+          <p>Let's start by building the service host:</p>
+          <pre class="prettyprint linenums">
+            package main
+
+            import (
+            	"fmt"
+
+            	core "github.com/ipfs/go-ipfs/core"
+            	corenet "github.com/ipfs/go-ipfs/core/corenet"
+            	fsrepo "github.com/ipfs/go-ipfs/repo/fsrepo"
+
+            	"code.google.com/p/go.net/context"
+            )
+          </pre>
+          <p>We don't need too many imports for this. Now, the only other thing we need is our main function:</p>
+          <p>Set up an IPFS node.</p>
+          <pre class="prettyprint linenums">
+            func main() {
+              // Basic ipfsnode setup
+              r, err := fsrepo.Open("~/.ipfs")
+              if err != nil {
+                panic(err)
+              }
+            
+              ctx, cancel := context.WithCancel(context.Background())
+              defer cancel()
+            
+              cfg := &core.BuildCfg{
+                Repo:   r,
+                Online: true,
+              }
+            
+              nd, err := core.NewNode(ctx, cfg)
+            
+              if err != nil {
+                panic(err)
+              }
+          </pre>
+          <p>That's just the basic template of code to initiate a default IPFS node from the config in the user's 
+            <code>~/.ipfs</code> directory.
+          </p>
+          <p>Next, we are going to build our service.</p>
+          <pre class="prettyprint linenums">
+            list, err := corenet.Listen(nd, "/app/whyrusleeping")
+	          if err != nil {
+          		panic(err)
+          	}
+
+          	fmt.Printf("I am peer: %s\n", nd.Identity.Pretty())
+
+          	for {
+        	    	con, err := list.Accept()
+        	    	if err != nil {
+      		        	fmt.Println(err)
+        	      		return
+          	  	}
+
+            		defer con.Close()
+
+            		fmt.Fprintln(con, "Hello! This is whyrusleepings awesome ipfs service")
+            		fmt.Printf("Connection from: %s\n", con.Conn().RemotePeer())
+            	}
+           }
+          </pre>
+          <p>And that's really all you need to write a service on top of IPFS. When a client connects, we send 
+            them our greeting, print their peer ID to our log, and close the session. This is the simplest possible 
+            service, and you can really write anything you want to handle the connection.
+          </p>
+          <p>Now we need a client to connect to us:</p>
+          <pre class="prettyprint linenums">
+            package main
+
+            import (
+              	"fmt"
+              	"io"
+              	"os"
+
+              	core "github.com/ipfs/go-ipfs/core"
+              	corenet "github.com/ipfs/go-ipfs/core/corenet"
+              	peer "github.com/ipfs/go-ipfs/p2p/peer"
+              	fsrepo "github.com/ipfs/go-ipfs/repo/fsrepo"
+
+              	"golang.org/x/net/context"
+            )
+
+            func main() {
+            	if len(os.Args) < 2 {
+            		fmt.Println("Please give a peer ID as an argument")
+            		return
+            	}
+            	target, err := peer.IDB58Decode(os.Args[1])
+            	if err != nil {
+            		panic(err)
+            	}
+
+            	// Basic ipfsnode setup
+            	r, err := fsrepo.Open("~/.ipfs")
+            	if err != nil {
+              		panic(err)
+            	}
+
+            	ctx, cancel := context.WithCancel(context.Background())
+            	defer cancel()
+
+            	cfg := &core.BuildCfg{
+              		Repo:   r,
+              		Online: true,
+            	}
+
+            	nd, err := core.NewNode(ctx, cfg)
+
+            	if err != nil {
+              		panic(err)
+            	}
+
+            	fmt.Printf("I am peer %s dialing %s\n", nd.Identity, target)
+
+            	con, err := corenet.Dial(nd, target, "/app/whyrusleeping")
+            	if err != nil {
+              		fmt.Println(err)
+              		return
+            	}
+
+            	io.Copy(os.Stdout, con)
+            }
+          </pre>
+          <p>This client will set up their IPFS node (note: this is moderately expensive and you normally won't 
+            just spin up an instance for a single connection) and dial the service we just created.
+          </p>
+          <p>To try it out, run the following on one computer:</p>
+          <pre class="prettyprint linenums">
+            ipfs init # if you haven't already
+            go run host.go
+          </pre>
+          <p>That should print out that peer's ID, copy it and use it on a second machine:</p>
+          <pre>
+            ipfs init # if you haven't already
+            go run client.go <peerID>
+          </pre>
+          <p>It should print out <code>Hello! This is whyrusleepings awesome ipfs service</code></p>
+          <p>Now, you might be asking yourself: "Why would I use this? How is it better than the <code>net</code> 
+            package?". Here are the advantages:
+          </p>
+          <ul>
+            <li>You dial a specific peerID, no matter what their IP address happens to be at the moment.</li>
+            <li>You take advantage of the NAT traversal built into our net package.</li>
+            <li>Instead of a 'port' number, you get a much more meaningful protocol ID string.</li>
+          </ul>
+        </section>
+        <!-- Run an IPFS Node
+        ================================================== -->
+        <section id="api" class="doc">
+          <div class="page-header">
+            <h3>Build with the IPFS API</h3>
+          </div>
+          <p>There are 2 implementations of IPFS clients, one in JavaScript and the other in Go. JavaScript might 
+            seem like the best choice here, but since it’s in a much earlier state of development than the Go client, 
+            this is not the best choice. We’ll use the Go client and connect to it with Node via its API.
+          </p>
+          <p><b>Prerequisites:</b></p>
+          <ul><li>Node.js (ideally one of the later versions) & npm</li></ul>
+          <ul><li>A go-ipfs client (installation instructions <a href="https://docs.ipfs.io/guides/guides/install/">here</a>)</li></ul>
+          <ul><li><a href="https://www.getpostman.com/downloads/">Postman</a> or curl, for making requests to our REST API</li></ul>
+          <p>First of all, our node has to be running in online mode, so open up a terminal and run <code>ipfs daemon</code>. 
+            You should see something like this:
+          </p>
+          <figure data-rt-type="image" data-rt-align="center" data-rt-max-width="100" class="w-richtext-align-center" 
+            style="max-width: 120%;" data-rt-max-height="53.75">
+            <div><img src="file:///home/sjohn/Documents/ipfs-africa/assets/img/ipfs-daemon.png" alt=""></div>
+          </figure>
+          <p>On <b>line 19</b>, you can see the API server is listening on port 5001. This is what we need to connect to.</p>
+          <p>Secondly, create a new project directory and run <code>npm install ipfs-http-client</code>. This is the package 
+            we need to connect to our running IPFS node.
+          </p>
+          <p>Next, let’s create the js file where we’ll connect to the node:</p>
+          <figure data-rt-type="image" data-rt-align="center" data-rt-max-width="100" class="w-richtext-align-center" 
+            style="max-width: 120%;" data-rt-max-height="53.75">
+            <div><img src="file:///home/sjohn/Documents/ipfs-africa/assets/img/js-file.png" alt=""></div>
+          </figure>
+          <p>On <b>line 3</b> we actually connect to the daemon API server. We can now start executing commands on the ipfs 
+            object to interact with the network.
+          </p>
+          <p>As an example, let’s write a function that adds some text to IPFS:</p>
+          <figure data-rt-type="image" data-rt-align="center" data-rt-max-width="100" class="w-richtext-align-center" 
+            style="max-width: 120%;" data-rt-max-height="53.75">
+            <div><img src="file:///home/sjohn/Documents/ipfs-africa/assets/img/add-file.png" alt=""></div>
+          </figure>
+          <p>On <b>line 1</b>, we create an object to add to IPFS. The path is what we want the file to be called on IPFS (we 
+            can include a directory), and the content is a <code>Buffer</code> of the file (in this case, just plain text) we 
+            want to add. Next, we add the file to ipfs with <code>ipfs.add()</code>, which returns an array with all the added 
+            files. Since we only added one, the result of <code>console.log()</code> will be:
+          </p>
+          <figure data-rt-type="image" data-rt-align="center" data-rt-max-width="100" class="w-richtext-align-center" 
+            style="max-width: 120%;" data-rt-max-height="53.75">
+            <div><img src="file:///home/sjohn/Documents/ipfs-africa/assets/img/testfile.png" alt=""></div>
+          </figure>
+          <p>If you’re following along, you’ll notice that the hash field will be exactly the same every time, because you added 
+            the same content I did. Also, notice that the path name doesn’t affect the content identifier. If you now want to 
+            retrieve your content, you have 2 possibilities:
+          </p>
+          <ul><li>Use your local gateway server like this: http://localhost:8080/ipfs/QmWfVY9y3xjsixTgbd9AorQxH7VtMpzfx2HaWtsoUYecaX
+            The gateway server was spun up by your IPFS daemon.</li></ul>
+          <ul><li>Use a public gateway like this: https://gateway.ipfs.io/ipfs/QmWfVY9y3xjsixTgbd9AorQxH7VtMpzfx2HaWtsoUYecaX</li></ul>
+          <p>All this is already pretty cool, but let’s see how we can use this in an app. To demonstrate some more functionality, 
+            let’s create a small REST API with Express.
+          </p>
+          <h4>Building An Application</h4>
+          <p>Don’t forget to run <code>npm install express</code>.</p>
+          <p>Let’s start with some boilerplate code:</p>
+          <figure data-rt-type="image" data-rt-align="center" data-rt-max-width="100" class="w-richtext-align-center" 
+            style="max-width: 120%;" data-rt-max-height="53.75">
+            <div><img src="file:///home/sjohn/Documents/ipfs-africa/assets/img/express.png" alt=""></div>
+          </figure>
+          <p>Go ahead and run this and test it out with curl <code>http://localhost:3000</code>. You should see <code>Welcome to my IPFS app</code>.</p>
+          <p>Let’s now add a <code>POST</code> route:</p>
+          <figure data-rt-type="image" data-rt-align="center" data-rt-max-width="100" class="w-richtext-align-center" 
+            style="max-width: 120%;" data-rt-max-height="53.75">
+            <div><img src="file:///home/sjohn/Documents/ipfs-africa/assets/img/post-route.png" alt=""></div>
+          </figure>
+          <p>We can now test out this route with Postman. Create a new POST request to <code>http://localhost:3000/upload</code>. 
+            You can choose what you put in the body, but it has to be JSON:
+          </p>
+          <figure data-rt-type="image" data-rt-align="center" data-rt-max-width="100" class="w-richtext-align-center" 
+            style="max-width: 120%;" data-rt-max-height="53.75">
+            <div><img src="file:///home/sjohn/Documents/ipfs-africa/assets/img/postman.png" alt=""></div>
+          </figure>
+          <p>If everything went well, you should’ve gotten the response I got and some terminal output from our Express app: 
+            { <code>path: 'postman request', content: 'postman says whassup'</code> } . Since we use JSON middleware, <code>req.body</code> 
+            got parsed as a JS object, which is already the format we need to add something to IPFS. Let’s extend the functionality 
+            by modifying and calling the <code>addFile</code> function, and we’ll return a link to the added file over a public gateway:
+          </p>
+          <figure data-rt-type="image" data-rt-align="center" data-rt-max-width="100" class="w-richtext-align-center" 
+            style="max-width: 120%;" data-rt-max-height="53.75">
+            <div><img src="file:///home/sjohn/Documents/ipfs-africa/assets/img/app-post.png" alt=""></div>
+          </figure>
+          <p>In <code>addFile()</code> on <b>line 8</b>, we take in the <code>req.body</code> data as a parameter and use that to add to 
+            IPFS. We then return the <code>fileHash</code>, so that we can include it in the link we send back as a response. If we now 
+            make another POST request on Postman:
+          </p>
+          <figure data-rt-type="image" data-rt-align="center" data-rt-max-width="100" class="w-richtext-align-center" 
+            style="max-width: 120%;" data-rt-max-height="53.75">
+            <div><img src="file:///home/sjohn/Documents/ipfs-africa/assets/img/post-man.png" alt=""></div>
+          </figure>
+          <p>We get back a link to view our file on a public gateway! Note that this link might actually take a while to load since public 
+            gateways can be very slow.
+          </p>
+          <p>That was it. Thanks for reading.</p>
+        </section>
+      </div>
+    </div>
+  </div>
+  <!-- Footer
+ ================================================== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="row">
+        <div class="span4">
+          <div class="widget">
+            <h5>Community</h5>
+            <ul class="regular">
+              <li><a href="https://twitter.com/ipfs_africa">Twitter</a></li>
+              <li><a href="https://discuss.ipfs.io/">Discuss IPFS</a></li>
+              <li><a href="https://github.com/ipfs-africa">Github</a></li>
+              <li><a href="https://ipfs.us4.list-manage.com/subscribe?u=25473244c7d18b897f5a1ff6b&id=cad54b2230">Newsletter</a></li>
+              <li><a href="https://www.youtube.com/channel/UCdjsUXJ3QawK4O5L1kqqsew">YouTube</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="span4">
+          <div class="widget">
+            <h5>Get Involved</h5>
+            <ul class="regular">
+              <li><a href="https://github.com/ipfs-africa/code-of-conduct">Code of Conduct</a></li>
+              <li><a href="https://www.eventbrite.co.uk/o/ipfs-africa-30424005626">Meetups</a></li>
+              <li><a href="https://docs.ipfs.io/community/contribute/ways-to-contribute/">Contribution Guide</a></li>
+              <li><a href="https://docs.ipfs.io/community/contribute/contribution-tutorial/">Opportunities</a></li>
+              <li><a href="https://proto.school/#/events">ProtoSchool</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="span4">
+          <div class="widget">
+            <!-- logo -->
+            <a class="brand logo" href="index.html">
+              <img src="assets/img/logo-dark.png" alt="">
+            </a>
+            <!-- end logo -->
+            <address>
+              <strong>IPFS Africa Community</strong><br>
+               We host events, workshops to<br>
+               drive breakthroughs in computing<br>
+               and push humanity forward.<br>
+            </address>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="verybottom">
+      <div class="container">
+        <div class="row">
+          <div class="span6">
+            <p>
+              &copy; IPFS Africa - All right reserved
+            </p>
+          </div>
+          <div class="span6">
+            <div class="credits">
+              Designed by <a href="">IPFS Africa Community</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JavaScript Library Files -->
+  <script src="assets/js/jquery.min.js"></script>
+  <script src="assets/js/jquery.easing.js"></script>
+  <script src="assets/js/google-code-prettify/prettify.js"></script>
+  <script src="assets/js/modernizr.js"></script>
+  <script src="assets/js/bootstrap.js"></script>
+  <script src="assets/js/jquery.elastislide.js"></script>
+  <script src="assets/js/sequence/sequence.jquery-min.js"></script>
+  <script src="assets/js/sequence/setting.js"></script>
+  <script src="assets/js/jquery.prettyPhoto.js"></script>
+  <script src="assets/js/application.js"></script>
+  <script src="assets/js/jquery.flexslider.js"></script>
+  <script src="assets/js/hover/jquery-hover-effect.js"></script>
+  <script src="assets/js/hover/setting.js"></script>
+
+  <!-- Template Custom JavaScript File -->
+  <script src="assets/js/custom.js"></script>
+
+
+</body>
+
+</html>

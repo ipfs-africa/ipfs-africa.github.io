@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Get Started - IPFS Africa Community</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <!-- styles -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:400italic,400,600,700" rel="stylesheet">
+  <link href="assets/css/bootstrap.css" rel="stylesheet">
+  <link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
+  <link href="assets/css/docs.css" rel="stylesheet">
+  <link href="assets/js/google-code-prettify/prettify.css" rel="stylesheet">
+  <link href="assets/css/style.css" rel="stylesheet">
+  <link href="assets/color/default.css" rel="stylesheet">
+
+  <!-- fav and touch icons -->
+  <link rel="shortcut icon" href="assets/ico/favicon.ico">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/apple-touch-icon-144-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/ico/apple-touch-icon-114-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/ico/apple-touch-icon-72-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" href="assets/ico/apple-touch-icon-57-precomposed.png">
+
+</head>
+
+<body data-spy="scroll" data-target=".bs-docs-sidebar">
+  <header>
+    <!-- Navbar
+    ================================================== -->
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <!-- logo -->
+          <a class="brand logo" href="index.html">
+			<img src="assets/img/logo.png" alt="" />
+			</a>
+          <!-- end logo -->
+          <!-- top menu -->
+          <div class="navigation">
+            <nav>
+              <ul class="nav topnav">
+                <li><a href="index.html">Home</a></li>
+                <li class="dropdown active"><a href="get-started.html">Get Started</a></li>
+                <li><a href="build-apps.html">Build Apps</a></li>
+                <li><a href="portfolio.html">Ecosystem</a></li>
+                <li><a href="contact.html">Contact</a></li>
+              </ul>
+            </nav>
+          </div>
+          <!-- end menu -->
+        </div>
+      </div>
+    </div>
+  </header>
+  <!-- Subhead
+================================================== -->
+  <section id="subintro">
+    <div class="jumbotron subhead" id="overview">
+      <div class="container">
+        <div class="row">
+          <div class="span12">
+            <div class="centered">
+              <h3>Get Started</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div class="container">
+    <!-- Docs nav
+    ================================================== -->
+    <div class="row">
+      <div class="span3 bs-docs-sidebar">
+        <ul class="nav nav-list bs-docs-sidenav">
+          <li><a href="#ipfs"><i class="icon-chevron-right"></i> What is IPFS</a></li>
+          <li><a href="#nodes"><i class="icon-chevron-right"></i> Run An IPFS Node</a></li>
+          <li><a href="#websites"><i class="icon-chevron-right"></i> Host A Website on IPFS</a></li>
+        </ul>
+      </div>
+      <div class="span9">
+        <!-- What is IPFS?
+        ================================================== -->
+        <section id="ipfs" class="doc">
+          <div class="page-header">
+            <h3>What is IPFS</h3>
+          </div>
+          <p>
+            <b>IPFS is a distributed system for storing and accessing files, websites, applications, and data.</b>
+          </p>
+          <p></p>
+          <h4 id="headings">Decentralization</h4>
+          <p>
+            Making it possible to download a file from many locations that aren’t managed by one organization…
+          </p>
+          <p>- <b>Supports a resilient internet.</b> If someone attacks Wikipedia’s web servers or an 
+            engineer at Wikipedia makes a big mistake that causes their servers to catch fire, you can 
+            still get the same webpages from somewhere else.
+          </p>
+          <p>- <b>Makes it harder to censor content.</b> Because files on IPFS can come from many places, it’s 
+            harder for anyone (whether they’re states, corporations, or someone else) to block things. In 
+            2017, Turkey blocked Wikipedia and Spain blocked access to sites related to the Catalonian 
+            independence movement. We hope IPFS can help provide ways to circumvent actions like these 
+            when they happen.
+          </p>
+          <p>- <b>Can speed up the web when you’re far away or disconnected.</b> If you can retrieve a file 
+            from someone nearby instead of hundreds or thousands of miles away, you can often get it faster. 
+            This is especially valuable if your community is networked locally, but doesn’t have a good 
+            connection to the wider internet. (Well-funded organizations with technical expertise do this 
+            today by using multiple data centers or CDNs — content distribution networks. IPFS hopes to 
+            make this possible for everyone.)
+          </p>
+          <p>That last point is actually where IPFS gets its full name: the InterPlanetary File System. We’re 
+            striving to build a system that works across places as disconnected or as far apart as planets. While 
+            that's an idealistic goal, it keeps us working and thinking hard, and most everything we create in 
+            pursuit of that goal is also useful here at home.
+          </p>
+          <h4>Content Addressing</h4>
+          <p>
+            What do links on IPFS look like:
+          </p>
+          <pre class="prettyprint linenums">/ipfs/QmXoypizjW3WknFiJnKLwHCnL72vedxjQkDDP1mXWo6uco/wiki/Example.html</pre>
+          <p>
+            That jumble of letters after <code>/ipfs/</code> is called a content identifier and it’s how IPFS can 
+            get content from multiple places.
+          </p>
+          <p>Traditional URLs and file paths such as…</p>
+          <ul>
+            <li><code>https://en.wikipedia.org/wiki/Aardvark</code></li>
+          </ul>
+          <ul>
+            <li><code>/Users/Alice/Documents/term_paper.doc</code></li>
+          </ul>
+          <ul>
+            <li><code>C:\Users\Joe\My Documents\project_sprint_presentation.ppt</code></li>
+          </ul>
+          <p>Instead of being location-based, IPFS addresses a file by what’s in it, or by its content. The content 
+            identifier above is a cryptographic hash of the content at that address. The hash is unique to the content 
+            that it came from, even though it may look short compared to the original content. It also allows you to 
+            verify that you got what you asked for — bad actors can’t just hand you content that doesn’t match. (If 
+            hashes are new to you, check out the concept guide on hashes for an introduction.)
+          </p>
+          <p>Because the address of a file in IPFS is created from the content itself, links in IPFS can’t be changed. 
+            For example ...
+          </p>
+          <ul>
+            <li>If the text on a web page is changed, the new version gets a new, different address.</li>
+            <li>Content can’t be moved to a different address. On today’s internet, a company could 
+              reorganize content on their website and move a page at <code>http://mycompany.com/what_we_do</code> 
+              to <code>http://mycompany.com/services.</code> In IPFS, the old link you have would 
+              still point to the same old content.
+            </li>
+          </ul>
+        </section>
+        <!-- Run an IPFS Node
+        ================================================== -->
+        <section id="nodes" class="doc">
+          <div class="page-header">
+            <h3>Run An IPFS Node</h3>
+          </div>
+          <p>If you're command-line savvy and just want to get up and running with IPFS right away, follow this quick 
+            start guide. Please note that this guide assumes that you'll be installing go-ipfs, the reference implementation 
+            written in Go.
+          </p>
+          <blockquote>
+            <p>TIP
+
+              Don’t want to use the command line right now? Give the desktop-app implementation of IPFS a try. It also does 
+              all the steps listed on this page automatically, so you can run IPFS from the terminal later whenever you want. 
+              <a href="https://github.com/ipfs-shipyard/ipfs-desktop"><b>Download IPFS Desktop</b></a>.
+            </p>
+          </blockquote>
+          <h4>Install IPFS</h4>
+          <p>
+            Installing IPFS is simple, but varies between operating system:
+          </p>
+          <h5><b>Windows</b></h5>
+          <ol>
+            <li>Download <code>go-ipfs_v0.5.1_windows-386.zip</code> from GitHub</li>
+            <pre class="prettyprint linenums">
+              cd ~\
+              wget https://github.com/ipfs/go-ipfs/releases/download/v0.5.1/go-ipfs-v0.5.1_windows-386.zip -Outfile go-ipfs-v0.5.1.zip
+            </pre>
+            <li>Unzip the file and move it somewhere handy.</li>
+            <pre class="prettyprint linenums">Expand-Archive -Path go-ipfs-v0.5.1.zip -DestinationPath ~\Apps\go-ipfs_v0.5.1</pre>
+            <li>Move into the <code>go-ipfs_v0.5.1</code> folder and check that the <code>ipfs.exe</code> works:</li>
+            <pre class="prettyprint linenums">
+              cd ~\Apps\go-ipfs_v0.5.1\go-ipfs
+              .\ipfs.exe --version 
+              > ipfs version 0.5.0
+            </pre>
+            <p>While you can use IPFS right now, it's better to add <code>ipfs.exe</code> to your <code>PATH</code>.</p>
+            <li>Print the current working directory and copy it to your clipboard:</li>
+            <pre class="prettyprint linenums">
+              pwd
+
+              > Path
+              > ----
+              > C:\Users\Johnny\Apps\go-ipfs_v0.5.1\go-ipfs
+            </pre>
+            <li>Add the address you just copied to PowerShell's <code>PATH</code> by adding it to the end of the 
+              <code>profile.ps1</code> file stored in <code>Documents\WindowsPowerShell</code>:
+            </li>
+            <pre class="prettyprint linenums">
+              Add-Content C:\Users\Johnny\Documents\WindowsPowerShell\profile.ps1 "[System.Environment]::SetEnvironmentVariable('PATH',`$Env:PATH+';;C:\Users\Johnny\Apps\go-ipfs_v0.5.1\go-ipfs')"
+            </pre>
+            <li>Close and reopen your PowerShell window. Test that your IPFS path is set correctly by going to 
+              your home folder and asking IPFS for the version:
+            </li>
+            <pre class="prettyprint linenums">
+              cd ~
+              ipfs --version
+              > ipfs version 0.5.0
+            </pre>
+          </ol>
+          <h5><b>macOS</b></h5>
+          <ol>
+            <li>Download <code>go-ipfs_v0.5.1_darwin-386.tar.gz</code> from GitHub.</li>
+            <pre class="prettyprint linenums">
+              wget https://github.com/ipfs/go-ipfs/releases/download/v0.5.1/go-ipfs_v0.5.1_darwin-amd64.tar.gz
+            </pre>
+            <li>Unzip the file:</li>
+            <pre class="prettyprint linenums">
+              tar -xvzf go-ipfs_v0.5.1_darwin-amd64.tar.gz
+
+              > x go-ipfs/install.sh
+              > x go-ipfs/ipfs
+              > x go-ipfs/LICENSE
+              > x go-ipfs/LICENSE-APACHE
+              > x go-ipfs/LICENSE-MIT
+              > x go-ipfs/README.md
+            </pre>
+            <li>Move into the <code>go-ipfs</code> folder and run the install script:</li>
+            <pre class="prettyprint linenums">
+              bash install.sh
+
+              > Moved ./ipfs to /usr/local/bin
+            </pre>
+            <li>Check that IPFS install properly:</li>
+            <pre class="prettyprint linenums">
+              ipfs --version
+
+              > ipfs version 0.5.0
+            </pre>
+          </ol>
+          <h5><b>Linux</b></h5>
+          <ol>
+            <li>Download <code>go-ipfs_v0.5.1_linux-amd64.tar.gz</code> from GitHub</li>
+            <pre class="prettyprint linenums">
+              wget https://github.com/ipfs/go-ipfs/releases/download/v0.5.1/go-ipfs_v0.5.1_linux-amd64.tar.gz
+            </pre>
+            <li>Unzip the file:</li>
+            <pre>
+              tar -xvzf go-ipfs_v0.5.1_linux-amd64.tar.gz
+
+              > x go-ipfs/install.sh
+              > x go-ipfs/ipfs
+              > x go-ipfs/LICENSE
+              > x go-ipfs/LICENSE-APACHE
+              > x go-ipfs/LICENSE-MIT
+              > x go-ipfs/README.md
+            </pre>
+            <li>Move into the <code>go-ipfs</code> folder and run the install script:</li>
+            <pre class="prettyprint linenums">
+              cd go-ipfs
+              sudo bash install.sh
+
+              > Moved ./ipfs to /usr/local/bin
+            </pre>
+            <li>Test that IPFS has installed correctly:</li>
+            <pre class="prettyprint linenums">
+              ipfs --version
+
+              > ipfs version 0.5.0
+            </pre>
+          </ol>
+          <h4>Initialize the Repository</h4>
+          <p><code>ipfs</code> stores all its settings and internal data in a directory called <i>the repository</i>. 
+            Before using IPFS for the first time, you’ll need to initialize the repository with the <code>ipfs init</code> 
+            command:
+          </p>
+          <pre class="prettyprint linenums">
+            ipfs init
+            > initializing ipfs node at /Users/jbenet/.go-ipfs
+            > generating 2048-bit RSA keypair...done
+            > peer identity: Qmcpo2iLBikrdf1d6QU6vXuNb6P7hwrbNPW9kLAH8eG67z
+            > to get started, enter:
+            >
+            >   ipfs cat /ipfs/QmYwAPJzv5CZsnA625s3Xf2nemtYgPpHdWEz79ojWnPbdG/readme
+          </pre>
+          <p>If you are running on a server in a data center, you should initialize IPFS with the <code>server</code> 
+            profile. Doing so will prevent IPFS from creating a lot of data center-internal traffic trying to discover 
+            local nodes:
+          </p>
+          <pre class="prettyprint linenums">
+            ipfs init --profile server
+          </pre>
+          <p>The hash after <code>peer identity:</code> is your node’s ID and will be different from the one shown in 
+            the above output. Other nodes on the network use it to find and connect to you. You can run <code>ipfs id</code> 
+            at any time to get it again if you need it.
+          </p>
+          <p>Now, try running the command suggested to you in the output of <code>ipfs init</code>. The one that looks 
+            like <code>ipfs cat /ipfs/<HASH>/readme</code>.
+          </p>
+          <p>You should see something like this:</p>
+          <pre class="prettyprint linenums">
+            Hello and Welcome to IPFS!
+
+            ██╗██████╗ ███████╗███████╗
+            ██║██╔══██╗██╔════╝██╔════╝
+            ██║██████╔╝█████╗  ███████╗
+            ██║██╔═══╝ ██╔══╝  ╚════██║
+            ██║██║     ██║     ███████║
+            ╚═╝╚═╝     ╚═╝     ╚══════╝
+
+            If you see this, you have successfully installed
+            IPFS and are now interfacing with the ipfs merkledag!
+
+             -------------------------------------------------------
+            | Warning:                                              |
+            |   This is alpha software. use at your own discretion! |
+            |   Much is missing or lacking polish. There are bugs.  |
+            |   Not yet secure. Read the security notes for more.   |
+             -------------------------------------------------------
+
+            Check out some of the other files in this directory:
+
+            ./about
+            ./help
+            ./quick-start     <-- usage examples
+            ./readme          <-- this file
+            ./security-notes
+          </pre>
+          <p>You can explore other objects in the repository. In particular, the <code>quick-start</code> directory which 
+            shows example commands to try:
+          </p>
+          <pre class="prettyprint linenums">ipfs cat /ipfs/QmYwAPJzv5CZsnA625s3Xf2nemtYgPpHdWEz79ojWnPbdG/quick-start</pre>
+          <h4>Take your node online</h4>
+          <p>Once you're ready to join your node to the public network, run the ipfs daemon in another terminal and wait 
+            for all three lines below to appear to know that your node is ready:
+          </p>
+          <pre class="prettyprint linenums">
+            ipfs daemon
+            > Initializing daemon...
+            > API server listening on /ip4/127.0.0.1/tcp/5001
+            > Gateway server listening on /ip4/127.0.0.1/tcp/8080
+          </pre>
+          <p>Make a note of the TCP ports you receive. If they are different, use yours in the commands below.</p>
+          <p>Now, switch back to your original terminal. If you’re connected to the network, you should be able 
+            to see the ipfs addresses of your peers when you run:
+          </p>
+          <pre class="prettyprint linenums">
+            ipfs swarm peers
+            > /ip4/104.131.131.82/tcp/4001/p2p/QmaCpDMGvV2BGHeYERUEnRQAwe3N8SzbUtfsmvsqQLuvuJ
+            > /ip4/104.236.151.122/tcp/4001/p2p/QmSoLju6m7xTh3DuokvT3886QRYqxAzb1kShaanJgW36yx
+            > /ip4/134.121.64.93/tcp/1035/p2p/QmWHyrPWQnsz1wxHR219ooJDYTvxJPyZuDUPSDpdsAovN5
+            > /ip4/178.62.8.190/tcp/4002/p2p/QmdXzZ25cyzSF99csCQmmPZ1NTbWTe8qtKFaZKpZQPdTFB
+          </pre>
+          <p>These are a combination of <code><transport address>/p2p/<hash-of-public-key></hash-of-public-key></code>.</p>
+          <p>Now, you should be able to get objects from the network. Try:</p>
+          <pre class="prettyprint linenums">
+            ipfs cat /ipfs/QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ/cat.jpg > cat.jpg
+            open cat.jpg
+          </pre>
+          <p>Next, try sending objects to the network, and then viewing it in your favorite browser. The example below uses 
+            <code>curl</code> as the browser, but you can open the IPFS URL in other browsers as well:
+          </p>
+          <pre class="prettyprint linenums">
+            hash=`echo "I <3 IPFS -$(whoami)" | ipfs add -q`
+            curl "https://ipfs.io/ipfs/$hash"
+            > I <3 IPFS -<your username>
+          </pre>
+          <p>The gateway served a file from your computer. The gateway queried the Distributed hash table (DHT), found your 
+            machine, requested the file, your computer sent it to the gateway, and the gateway sent it to your browser.
+          </p>
+          <p>You can also check it out at your own local gateway:</p>
+          <pre class="prettyprint linenums">
+            curl "http://127.0.0.1:8080/ipfs/$hash"
+            > I <3 IPFS -<your username>
+          </pre>
+          <h4>Web Console</h4>
+          <p>You can view the web console on your local node by going to <code>localhost:5001/webui</code>. This should bring 
+            up a console like this:
+          </p>
+          <figure data-rt-type="image" data-rt-align="center" data-rt-max-width="100" class="w-richtext-align-center" 
+            style="max-width: 120%;" data-rt-max-height="53.75">
+            <div><img src="file:///home/sjohn/Documents/ipfs-africa/assets/img/webui-connection.png" alt=""></div>
+          </figure>
+          <h4>IPFS Companion</h4>
+          <p>While we are at it, <a href="https://github.com/ipfs-shipyard/ipfs-companion#ipfs-companion">IPFS Companion</a> 
+            is a browser extension that simplifies access to IPFS resources and adds support for the IPFS protocol.
+          </p>
+          <p>It will automatically redirect IPFS gateway requests to your local daemon so that you are not relying on or 
+            trusting, remote gateways.
+          </p>
+          <p>It runs in Firefox (desktop and Android) and various Chromium-based browsers such as Google Chrome or Brave.
+            <a href="https://github.com/ipfs-shipyard/ipfs-companion#features">Check out its features</a> and install it today!
+          </p>
+        </section>
+        <!-- Host A Website on IPFS
+        ================================================== -->
+        <section id="websites" class="doc">
+          <div class="page-header">
+            <h3>Host A Website on IPFS</h3>
+          </div>
+          <p>A great way to get to know IPFS is to use it to host a simple, single-page website. Here's a step-by-step guide 
+            to doing just that.
+          </p>
+          <h4>Create Your Site</h4>
+          <p>
+            Assume you have a static website in a directory <code>mysite</code>.
+          </p>
+          <p>In order to publish it as a site, install IPFS and make sure your IPFS daemon is running:</p>
+          <pre class="prettyprint linenums">
+            $ ipfs daemon
+          </pre>
+          <p>Then add the directory with your website:</p>
+          <pre class="prettyprint linenums">
+            $ ls mysite
+            img index.html
+            $ ipfs add -r mysite
+            added QmcMN2wqoun88SVF5own7D5LUpnHwDA6ALZnVdFXhnYhAs mysite/img/spacecat.jpg
+            added QmS8tC5NJqajBB5qFhcA1auav14iHMnoMZJWfmr4k3EY6w mysite/img
+            added QmYh6HbZhHABQXrkQZ4aRRSoSa6bb9vaKoHeumWex6HRsT mysite/index.html
+            added QmYeAiiK1UfB8MGLRefok1N7vBTyX8hGPuMXZ4Xq1DPyt7 mysite/
+          </pre>
+          <p>The last hash, next to the folder name, <code>mysite/</code> is the one to remember, call it <code>$SITE_CID</code> 
+            for now.
+          </p>
+          <p>You can test it out locally by opening <code>http://localhost:8080/ipfs/$SITE_CID</code> in a browser or with 
+            <code>wget</code> or <code>curl</code> from the command line.
+          </p>
+          <p>To view it from another ipfs node, you can try <code>http://gateway.ipfs.io/ipfs/$SITE_CID</code> in a browser. 
+            This will work from a browser on another device, inside or outside the network where you added the site's file.
+          </p>
+          <p>Those hashes are difficult to remember. Let's look at some ways to get rid of them.</p>
+          <h4>Edit your DNS records</h4>
+          <p>Assume you have the domain name <code>your.domain</code> and can access your registrar's control panel to manage 
+            DNS entries for it.
+          </p>
+          <p>Create a DNS TXT record (<a href="https://docs.ipfs.io/concepts/dnslink/">DNSLink</a>), with the key <code>your.domain</code>. 
+            and the value <code>dnslink=/ipfs/$SITE_CID</code> where <code>$SITE_CID</code> is the value from the section above.
+          </p>
+          <p>Once you've created that record, and it has propagated you should be able to find it.</p>
+          <pre class="prettyprint linenums">
+            $ dig +noall +answer TXT your.domain
+            your.domain.            60      IN      TXT     "dnslink=/ipfs/$SITE_CID"
+          </pre>
+          <p>Now you can view your site at <code>http://localhost:8080/ipns/your.domain</code>.</p>
+          <p>You can also try this on the gateway at <code>http://gateway.ipfs.io/ipns/your.domain</code>.</p>
+          <h4>Use IPNS</h4>
+          <p>Each time you change your website, you will have to republish it, update the DNS TXT record with the new value of 
+            <code>$SITE_CID</code> and wait for it to propagate.
+          </p>
+          <p>You can get around that limitation by using IPNS, the <a href="https://docs.ipfs.io/concepts/ipns/">InterPlanetary Naming System</a>.</p>
+          <p>You might have noticed <code>/ipns/</code> instead of <code>/ipfs/</code> in the updated links in the previous section.</p>
+          <p>The IPNS is used for mutable content in the IPFS network. It's relatively easy to use, and will allow you to change 
+            your website without updating the dns record every time.
+          </p>
+          <p>To enable the IPNS for your content, run the following command, where <code>$SITE_CID</code> is the hash value from the 
+            first step.
+          </p>
+          <pre class="prettyprint linenums">
+            $ ipfs name publish $SITE_CID
+            Published to $PEER_ID: /ipfs/$SITE_CID
+          </pre>
+          <p>You will need to note and save that value of <code>$PEER_ID</code> for the next steps.</p>
+          <p>Load the urls <code>http://localhost:8080/ipns/$PEER_ID</code> and <code>http://gateway.ipfs.io/ipns/$PEER_ID</code> to 
+            confirm this step.
+          </p>
+          <p>Return to your registrar's control panel, change the DNS TXT record with the key of <code>your.domain</code> to 
+            <code>dnslink=/ipns/$PEER_ID</code>, wait for that record to propagate, and then try the urls <code>http://localhost:8080/ipns/your.domain</code> 
+            and <code>http://gateway.ipfs.io/ipns/your.domain</code>.
+          </p>
+          <p><b>Note:</b> When using IPNS to update websites, assets may be loaded from two different resolved hashes while 
+            the update propagates. This may result in outdated URLs or missing assets until the update has completely propagated.
+          </p>
+          <h4>Point your domain to IPFS</h4>
+          <p>You now have a website on ipfs/ipns, but your visitors can't access it at <code>http://your.domain</code>.</p>
+          <p>What we can do is have requests for <code>http://your.domain</code> resolved by an IPFS gateway daemon.</p>
+          <p>Return to your registrar's control panel and add an A record with key of <code>your.domain</code> and value of the IP 
+            address of an ipfs daemon that listens on port 80 for HTTP requests (such as <code>gateway.ipfs.io</code>). If you don't 
+            know the IP address of the daemon you plan to use, you can find it using the command like:
+          </p>
+          <pre class="prettyprint linenums">$ nslookup gateway.ipfs.io</pre>
+          <ul>
+            <li>Note the IP addresses returned.</li>
+            <li>Create an A record for each IPv4 address (e.g. <code>209.94.90.1</code> for ipfs.io).</li>
+            <li>Create an AAAA record for each IPv6 address (e.g. use <code>2602:fea2:2::1</code> for ipfs.io).</li>
+          </ul>
+          <p>Note: The ipfs.io gateway IP addresses won't change, so you can set them and forget them. If you use a custom gateway where 
+            you don't control the IP address and they could change you may need to re-check them periodically and update your DNS records 
+            if they do.
+          </p>
+          <p>Visitors' browsers will send <code>your.domain</code> in the Host header of their requests. The ipfs gateway will recognize 
+            <code>your.domain</code>, look up the value of the DNS TXT for your domain, then serve the files in <code>/ipns/your.domain/</code> 
+            instead of <code>/</code>.
+          </p>
+          <p>If you point <code>your.domain</code>'s A and AAAA record to the IP addresses of <code>gateway.ipfs.io</code>, and then wait 
+            for the DNS to propagate, then anyone should be able to access your ipfs-hosted site without any extra configuration at 
+            <code>http://your.domain</code>.
+          </p>
+          <h4>Use CNAMEs</h4>
+          <P>Alternatively, it is possible to use CNAME records to point at the DNS records of the gateway. This way, IP addresses of the 
+            gateway are automatically updated.
+          </P>
+          <p>However you will need to change the key for the TXT record from <code>your.domain</code> to <code>_dnslink.your.domain</code>.</p>
+          <p>So by creating a CNAME for <code>your.domain</code> to <code>gateway.ipfs.io</code> and adding a <code>_dnslink.your.domain</code> 
+            record with <code>dnslink=/ipns/<your peer id></your></code> you can host your website without explicitly referring to IP addresses 
+            of the ipfs gateway.
+          </p>
+        </section>
+      </div>
+    </div>
+  </div>
+  <!-- Footer
+ ================================================== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="row">
+        <div class="span4">
+          <div class="widget">
+            <h5>Community</h5>
+            <ul class="regular">
+              <li><a href="https://twitter.com/ipfs_africa">Twitter</a></li>
+              <li><a href="https://discuss.ipfs.io/">Discuss IPFS</a></li>
+              <li><a href="https://github.com/ipfs-africa">Github</a></li>
+              <li><a href="https://ipfs.us4.list-manage.com/subscribe?u=25473244c7d18b897f5a1ff6b&id=cad54b2230">Newsletter</a></li>
+              <li><a href="https://www.youtube.com/channel/UCdjsUXJ3QawK4O5L1kqqsew">YouTube</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="span4">
+          <div class="widget">
+            <h5>Get Involved</h5>
+            <ul class="regular">
+              <li><a href="https://github.com/ipfs-africa/code-of-conduct">Code of Conduct</a></li>
+              <li><a href="https://www.eventbrite.co.uk/o/ipfs-africa-30424005626">Meetups</a></li>
+              <li><a href="https://docs.ipfs.io/community/contribute/ways-to-contribute/">Contribution Guide</a></li>
+              <li><a href="https://docs.ipfs.io/community/contribute/contribution-tutorial/">Opportunities</a></li>
+              <li><a href="https://proto.school/#/events">ProtoSchool</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="span4">
+          <div class="widget">
+            <!-- logo -->
+            <a class="brand logo" href="index.html">
+              <img src="assets/img/logo-dark.png" alt="">
+            </a>
+            <!-- end logo -->
+            <address>
+              <strong>IPFS Africa Community</strong><br>
+               We host events, workshops to<br>
+               drive breakthroughs in computing<br>
+               and push humanity forward.<br>
+            </address>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="verybottom">
+      <div class="container">
+        <div class="row">
+          <div class="span6">
+            <p>
+              &copy; IPFS Africa - All right reserved
+            </p>
+          </div>
+          <div class="span6">
+            <div class="credits">
+              Designed by <a href="">IPFS Africa Community</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JavaScript Library Files -->
+  <script src="assets/js/jquery.min.js"></script>
+  <script src="assets/js/jquery.easing.js"></script>
+  <script src="assets/js/google-code-prettify/prettify.js"></script>
+  <script src="assets/js/modernizr.js"></script>
+  <script src="assets/js/bootstrap.js"></script>
+  <script src="assets/js/jquery.elastislide.js"></script>
+  <script src="assets/js/sequence/sequence.jquery-min.js"></script>
+  <script src="assets/js/sequence/setting.js"></script>
+  <script src="assets/js/jquery.prettyPhoto.js"></script>
+  <script src="assets/js/application.js"></script>
+  <script src="assets/js/jquery.flexslider.js"></script>
+  <script src="assets/js/hover/jquery-hover-effect.js"></script>
+  <script src="assets/js/hover/setting.js"></script>
+
+  <!-- Template Custom JavaScript File -->
+  <script src="assets/js/custom.js"></script>
+
+
+</body>
+
+</html>
